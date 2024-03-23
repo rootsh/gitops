@@ -18,7 +18,7 @@ spec:
         - name: image.repository
           value: rootsh/golang-api-test
         - name: image.tag
-          value: teste
+          value: ""
       values: |-
         nameOverride: "golang-api-test"
         fullnameOverride: "golang-api-test"
