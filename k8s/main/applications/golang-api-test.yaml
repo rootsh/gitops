@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: golang-api-test
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: golang-api-test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'http://chartmuseum.chartmuseum:8080'
+    targetRevision: 0.1.0
+    chart: go-generic
+    helm:
+      parameters:
+        - name: image.repository
+          value: rootsh/golang-api-test
+        - name: image.tag
+          value: v0.0.5
+      values: |-
+        nameOverride: "golang-api-test"
+        fullnameOverride: "golang-api-test"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+        service:
+          type: ClusterIP
+          port: 8080
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
