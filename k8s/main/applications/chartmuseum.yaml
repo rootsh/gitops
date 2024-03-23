@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chartmuseum
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: chartmuseum
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://chartmuseum.github.io/charts'
+    targetRevision: 3.10.2
+    chart: chartmuseum
+    helm:
+      values: |-
+        env:
+          open:
+            STORAGE: local
+            STORAGE_LOCAL_ROOTDIR: /storage
+            DISABLE_API: false
+            ALLOW_OVERWRITE: true
+        persistence:
+          enabled: true
+          accessMode: ReadWriteOnce
+          size: 1Gi
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
