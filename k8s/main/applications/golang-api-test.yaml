@@ -15,13 +15,13 @@ spec:
     chart: go-generic
     helm:
       parameters:
-        - name: image.repository
-          value: rootsh/golang-api-test
         - name: image.tag
           value: "v0.0.41"
       values: |-
         nameOverride: "golang-api-test"
         fullnameOverride: "golang-api-test"
+        image:
+          repository: rootsh/golang-api-test
         livenessProbe:
           httpGet:
             path: /health
