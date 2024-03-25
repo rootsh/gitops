@@ -20,7 +20,7 @@ spec:
       values: |-
         nameOverride: "golang-api-test"
         fullnameOverride: "golang-api-test"
-        image
+        image:
           repository: rootsh/golang-api-test
         livenessProbe:
           httpGet:
