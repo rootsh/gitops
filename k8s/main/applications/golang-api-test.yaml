@@ -16,7 +16,7 @@ spec:
     helm:
       parameters:
         - name: image.tag
-          value: "v0.0.45"
+          value: "v0.0.47"
       values: |-
         nameOverride: "golang-api-test"
         fullnameOverride: "golang-api-test"
