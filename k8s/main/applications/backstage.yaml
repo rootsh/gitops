@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backstage
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: backstage
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://backstage.github.io/charts'
+    targetRevision: 1.9.2
+    chart: backstage
+    helm:
+      values: |-
+        backstage:
+          appConfig:
+            app:
+              baseUrl: http://localhost
+            backend:
+              baseUrl: http://localhost
+              auth:
+                keys:
+                  - secret: AbC1e2F
+            techdocs:
+              builder: 'local'
+              publisher:
+                type: 'local'
+        postgresql:
+          enabled: true
+          username: bn_backstage
+          password: 06a6h0LSXr3d
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
